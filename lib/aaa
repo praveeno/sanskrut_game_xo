@@ -1,0 +1,8 @@
+for (int i=0;i<=8;i++)
+    {
+      if (displayXO[i]==displayXO[i+3]&& displayXO[i]==displayXO[i+6] && displayXO[i]!='')
+      {
+        print("win")
+      }
+    }
+    
