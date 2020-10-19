@@ -212,7 +212,14 @@ class _MyhomeState extends State<Myhome> {
                            _cleanboard();
                           Navigator.of(context).pop();
                         },
-                        child: Text('PLAY AGIAN', style: fontdesign)),
+                        child: Text('PLAY AGIAN', style: fontdesignn)),
+
+                        RaisedButton(
+                        color: Colors.black,
+                        onPressed: () {
+                          exit(0);
+                        },
+                        child: Text('EXIT', style: fontdesignn))
                   ],
                 )
               ]);
