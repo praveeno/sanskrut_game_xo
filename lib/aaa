@@ -6,3 +6,37 @@ for (int i=0;i<=8;i++)
       }
     }
     
+
+
+    for (int i = 0; i <= 8; i += 3) {
+      if (displayXO[i] == displayXO[i + 1] &&
+          displayXO[i] == displayXO[i + 2] &&
+          displayXO[i] != '') {
+        print("win");
+        showdialogbox(displayXO[i]);
+      }
+    }
+    //for column check
+    for (int i = 0; i <= 2; i++) {
+      if (displayXO[i] == displayXO[i + 3] &&
+          displayXO[i] == displayXO[i + 6] &&
+          displayXO[i] != '') {
+        print("win");
+        showdialogbox(displayXO[i]);
+      }
+    }
+    //for diaogoanl check
+    for (int i = 0; i <= 1; i++) {
+      if (displayXO[i] == displayXO[4] &&
+          displayXO[i] == displayXO[8] &&
+          displayXO[i] != '') {
+        print("win");
+        showdialogbox(displayXO[i]);
+      }
+      if( (displayXO[2] == displayXO[4] &&
+          displayXO[2] == displayXO[6] &&
+          displayXO[0] != '')){
+            print("win");
+        showdialogbox(displayXO[i]);
+          }
+    }

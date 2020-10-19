@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,143 +16,49 @@ class _MyhomeState extends State<Myhome> {
   int xScore = 0;
   int count = 0;
 
-  void tapped(int index) {
-    setState(() {
-      if (oturn && displayXO[index] == '') {
-        displayXO[index] = 'O';
-        count += 1;
-      } else if (!oturn && displayXO[index] == '') {
-        displayXO[index] = 'X';
-        count += 1;
-      }
-      oturn = !oturn;
-      checkwinner();
-    });
-  }
-
-  void checkwinner() {
-    // for rows check
   
-    for (int i = 0; i <= 8; i += 3) {
-      if (displayXO[i] == displayXO[i + 1] &&
-          displayXO[i] == displayXO[i + 2] &&
-          displayXO[i] != '') {
-        print("win");
-        showdialogbox(displayXO[i]);
-      }
-    }
-    //for column check
-    for (int i = 0; i <= 2; i++) {
-      if (displayXO[i] == displayXO[i + 3] &&
-          displayXO[i] == displayXO[i + 6] &&
-          displayXO[i] != '') {
-        print("win");
-        showdialogbox(displayXO[i]);
-      }
-    }
-    //for diaogoanl check
-    for (int i = 0; i <= 2; i += 2) {
-      if (displayXO[0] == displayXO[4] &&
-          displayXO[0] == displayXO[8] &&
-          displayXO[0] != '') {
-        print("win");
-        showdialogbox(displayXO[i]);
-      }
-      else if( (displayXO[2] == displayXO[4] &&
-          displayXO[2] == displayXO[6] &&
-          displayXO[0] != '')){
-            print("win");
-        showdialogbox(displayXO[i]);
-          }
-    }
-
-    if (count == 9) {
-      showdrawdialogbox();
-      print(count);
-    }
-  } //checkwinner
-
-  void showdrawdialogbox() {
-    showDialog(
-      barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: Text("THE MATCH IS DRAW"),
-              actions: <Widget>[
-                RaisedButton(
-                    color: Colors.black,
-                    onPressed: () {
-                       cleanboard();
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('PLAY AGIAN', style: fontdesign))
-              ]);
-        });
-  }
-
-  void showdialogbox(String winner) {
-    
-    showDialog(
-      barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              backgroundColor: Colors.black,
-              title: Text("WINNER is player:  " + winner),
-              actions: <Widget>[
-                ( RaisedButton(
-                    color: Colors.black,
-                    onPressed: () {
-                      cleanboard();
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('PLAY AGIAN', style: fontdesign))
-          )]);
-        });
-    if (winner == 'O') {
-      oScore += 1;
-      } 
-    else if (winner == 'X') 
-    {
-      xScore += 1;
-    }
-
-    
-  }
-
-  void cleanboard() {
-    setState(() {
-for (int i=0;i<9;i++){
-  displayXO[i]='';
-}
-    });
-
-  }
   var myTextStyle = TextStyle(color: Colors.white, fontSize: 30);
   static var fontdesign = GoogleFonts.lemonada(
       textStyle:
           TextStyle(color: Colors.white, letterSpacing: 3, fontSize: 15));
+   static var fontdesignn = GoogleFonts.lemonada(
+      textStyle:
+          TextStyle(color: Colors.white, letterSpacing:1, fontSize:10));
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         home: Scaffold(
             backgroundColor: Colors.grey[900],
             appBar: AppBar(
-              backgroundColor: Colors.grey.shade700,
+              backgroundColor: Colors.grey.shade900,
               title: Text("XO GAME"),
             ),
             body: Column(
+              
               children: <Widget>[
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Expanded(
                   child: Container(
-                    color: Colors.black,
+                    width:MediaQuery.of(context).size.width * 0.85 ,
+                    decoration: BoxDecoration(
+                     // color:Colors.black38,
+                      gradient: LinearGradient(colors: <Color>[Colors.black54,Colors.black]
+                      ,
+                    ),
+                      border:Border.all(
+                        color:Colors.orangeAccent,
+                        width:2
+                      ),
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    height: 10,
+  
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(30.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -166,7 +74,7 @@ for (int i=0;i<9;i++){
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(30.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -185,11 +93,12 @@ for (int i=0;i<9;i++){
                     ),
                   ),
                 ),
+
+                SizedBox(height:20),
                 Expanded(
                   flex: 3,
                   // color: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  
                     child: GridView.builder(
                         itemCount: 9,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -202,7 +111,7 @@ for (int i=0;i<9;i++){
                             child: Container(
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Colors.grey[700])),
+                                        Border.all(color: Colors.yellow[700])),
                                 child: Center(
                                   child: Text(
                                     displayXO[index],
@@ -214,8 +123,155 @@ for (int i=0;i<9;i++){
                           );
                         }),
                   ),
-                ),
+              
               ],
             )));
   }
+ void tapped(int index) {
+    count += 1;
+    setState(() {
+      if (oturn && displayXO[index] == '') {
+        displayXO[index] = "O";
+        
+      } else if (!oturn && displayXO[index] == '') {
+        displayXO[index] = 'X';
+      }
+      oturn = !oturn;
+      checkwinner();
+    });
+  }
+
+  void checkwinner() {
+    // for rows check
+     if (displayXO[0] == displayXO[1] &&
+        displayXO[0] == displayXO[2] &&
+        displayXO[0] != '') {
+      showdialogbox(displayXO[0]);
+    }
+    //checks 2nd row
+    if (displayXO[3] == displayXO[4] &&
+        displayXO[3] == displayXO[5] &&
+        displayXO[3] != '') {
+      showdialogbox(displayXO[3]);
+    }
+    //checks 3rd row
+    if (displayXO[6] == displayXO[7] &&
+        displayXO[6] == displayXO[8] &&
+        displayXO[6] != '') {
+      showdialogbox(displayXO[6]);
+    }
+    //checks 1st column
+    if (displayXO[0] == displayXO[3] &&
+        displayXO[0] == displayXO[6] &&
+        displayXO[0] != '') {
+      showdialogbox(displayXO[0]);
+    }
+    //checks 2nd column
+    if (displayXO[1] == displayXO[4] &&
+        displayXO[1] == displayXO[7] &&
+        displayXO[1] != '') {
+      showdialogbox(displayXO[1]);
+    }
+    //checks 3rd column
+    if (displayXO[2] == displayXO[5] &&
+        displayXO[2] == displayXO[8] &&
+        displayXO[2] != '') {
+      showdialogbox(displayXO[2]);
+    }
+    //checks diagonal
+    if (displayXO[6] == displayXO[4] &&
+        displayXO[6] == displayXO[2] &&
+        displayXO[6] != '') {
+      showdialogbox(displayXO[6]);
+    }
+    //checks diagonal
+    if (displayXO[0] == displayXO[4] &&
+        displayXO[0] == displayXO[8] &&
+        displayXO[0] != '') {
+      showdialogbox(displayXO[0]);
+    } 
+    if (count == 9) {
+       showdrawdialogbox();
+    }
+  } //checkwinner
+
+  void showdrawdialogbox() {
+    showDialog(
+      barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            
+              title: Text("THE MATCH IS DRAW"),
+              actions: <Widget>[
+                Row(
+                  children: <Widget>[
+                    RaisedButton(
+                        color: Colors.black,
+                        onPressed: () {
+                           _cleanboard();
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('PLAY AGIAN', style: fontdesign)),
+                  ],
+                )
+              ]);
+        });
+  }
+
+  void showdialogbox(String winner) {
+    
+    showDialog(
+      barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              backgroundColor: Colors.black,
+              title: Text("WINNER is player:  " + winner),
+              actions: <Widget>[
+                Row(
+                  children: <Widget>[
+                    ( RaisedButton(
+                        color: Colors.black,
+                        onPressed: () {
+                          _cleanboard();
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('PLAY AGIAN', style: fontdesignn))
+          ),
+                  RaisedButton(
+                        color: Colors.black,
+                        onPressed: () {
+                          exit(0);
+                        },
+                        child: Text('EXIT', style: fontdesignn))
+                  ],
+                )]);
+        });
+   
+    if (winner == 'O') {
+      oScore += 1;
+      } 
+    else if (winner == 'X') 
+    {
+      xScore += 1;
+    }
+    else {
+      showdrawdialogbox();
+    }
+
+    
+  }
+
+  void _cleanboard() {
+setState(() {
+for (int i=0;i<=8;i++){
+  displayXO[i]='';
+}
+    });
+    count=0;
+
+  }
+
+
 }
